@@ -1,5 +1,6 @@
 package com.euflausino.desafio_backend_it.service;
 
+import com.euflausino.desafio_backend_it.dto.StatisticsResponseDTO;
 import com.euflausino.desafio_backend_it.entity.Transacao;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,27 +17,25 @@ import java.util.List;
 public class TransacaoService {
 
     @Value("${second.value}")
-    int secounds;
+    int seconds;
 
-    private List<Transacao> transacoes;
-
-    public TransacaoService(List<Transacao> transacoes) {
-        this.transacoes = new ArrayList<>();
-    }
+    private final List<Transacao> transactions = new ArrayList<>();
 
     public void criarTransacao(TransacaoRequestDTO criarTransacao) {
-        transacoes.add(TransacaoMapper.toEntity(criarTransacao));
+        transactions.add(TransacaoMapper.toEntity(criarTransacao));
     }
 
     public void deleteTransacao() {
-        transacoes.clear();
+        transactions.clear();
     }
-    public DoubleSummaryStatistics getTransacoes() {
+        public StatisticsResponseDTO getTransactions() {
         OffsetDateTime inicio = OffsetDateTime.now();
-        return transacoes.stream()
-                .filter(t -> t.getDataHora().isAfter(inicio.minusMinutes(secounds)))
+        DoubleSummaryStatistics stats = transactions.stream()
+                .filter(t -> t.getDataHora().isAfter(inicio.minusMinutes(seconds)))
                 .mapToDouble(Transacao::getValor)
                 .summaryStatistics();
+        return new StatisticsResponseDTO(stats);
+
     }
 
 }
