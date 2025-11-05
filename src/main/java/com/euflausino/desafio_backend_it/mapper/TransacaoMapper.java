@@ -5,7 +5,7 @@ import com.euflausino.desafio_backend_it.entity.Transacao;
 
 public class TransacaoMapper {
 	
-	public Transacao toEntity(TransacaoRequestDTO dados) {
+	public static Transacao toEntity(TransacaoRequestDTO dados) {
 		return new Transacao(dados.valor(), dados.dataHora());
 	}
 	
