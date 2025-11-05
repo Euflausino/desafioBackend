@@ -9,7 +9,7 @@ import jakarta.validation.constraints.PastOrPresent;
 
 public record TransacaoRequestDTO(
 		
-		@NotNull
+		@NotNull(message = "Valor deve ser maior ou igual a zero")
 		@Min(0)
 		Double valor,
 		
