@@ -31,7 +31,7 @@ public class TransacaoService {
         public StatisticsResponseDTO getTransactions() {
         OffsetDateTime inicio = OffsetDateTime.now();
         DoubleSummaryStatistics stats = transactions.stream()
-                .filter(t -> t.getDataHora().isAfter(inicio.minusMinutes(seconds)))
+                .filter(t -> t.getDataHora().isBefore(inicio.minusSeconds(seconds)))
                 .mapToDouble(Transacao::getValor)
                 .summaryStatistics();
         return new StatisticsResponseDTO(stats);
