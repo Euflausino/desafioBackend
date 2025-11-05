@@ -30,6 +30,9 @@ public class TransacaoService {
     }
         public StatisticsResponseDTO getTransactions() {
         OffsetDateTime inicio = OffsetDateTime.now();
+        if(transactions.isEmpty()) {
+            return new StatisticsResponseDTO(0,0,0,0,0);
+        }
         DoubleSummaryStatistics stats = transactions.stream()
                 .filter(t -> t.getDataHora().isBefore(inicio.minusSeconds(seconds)))
                 .mapToDouble(Transacao::getValor)

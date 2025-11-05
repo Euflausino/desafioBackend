@@ -10,6 +10,14 @@ public class StatisticsResponseDTO{
     private double min;
     private double max;
 
+    public StatisticsResponseDTO(long count, double sum, double avg, double min, double max) {
+        this.count = count;
+        this.sum = sum;
+        this.avg = avg;
+        this.min = min;
+        this.max = max;
+    }
+
     public StatisticsResponseDTO(DoubleSummaryStatistics statistics){
         this.count = statistics.getCount();
         this.sum = statistics.getSum();
