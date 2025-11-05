@@ -35,6 +35,9 @@ public class TransacaoController {
         return ResponseEntity.ok().build();
     }
 
-
+    @GetMapping("/estatistica")
+    public ResponseEntity<DoubleSummaryStatistics> listarTransacoes(){
+        return ResponseEntity.ok().body(transacaoService.getTransacoes());
+    }
 	
 }
