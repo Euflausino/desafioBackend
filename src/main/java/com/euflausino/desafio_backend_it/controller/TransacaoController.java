@@ -1,19 +1,20 @@
 package com.euflausino.desafio_backend_it.controller;
 
+import com.euflausino.desafio_backend_it.entity.Transacao;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.euflausino.desafio_backend_it.dto.TransacaoRequestDTO;
 import com.euflausino.desafio_backend_it.service.TransacaoService;
 
 import jakarta.validation.Valid;
 
+import java.util.DoubleSummaryStatistics;
+
 @RestController
-@RequestMapping("/transacao")
+@RequestMapping("/api")
 public class TransacaoController {
 	
 	private TransacaoService transacaoService;
@@ -22,10 +23,18 @@ public class TransacaoController {
 		this.transacaoService = transacaoService;
 	}
 	
-	@PostMapping
-	public BodyBuilder criarTransacao(@RequestBody @Valid TransacaoRequestDTO criarTransacao){
+	@PostMapping("/transacao")
+	public ResponseEntity<Void> criarTransacao(@RequestBody @Valid TransacaoRequestDTO criarTransacao){
 		transacaoService.criarTransacao(criarTransacao);
-		return ResponseEntity.created(null);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
+
+    @DeleteMapping("/transacao")
+    public ResponseEntity<Void> deletarTransacao(){
+        transacaoService.deleteTransacao();
+        return ResponseEntity.ok().build();
+    }
+
+
 	
 }
